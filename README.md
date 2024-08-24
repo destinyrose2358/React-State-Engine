@@ -1,46 +1,20 @@
-# Getting Started with Create React App
+# Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The React State Engine is a library meant to allow for complex state management using included getters and setter.
 
-## Available Scripts
+## MVP
 
-In the project directory, you can run:
+* State Engine:
+    * State: any
+    * Getters: StateEngineGetters
+    * Setters: StateEngineSetters
+* State Engine Getters: { [p: string]: (...args: any) => any | StateEngineGetters }
+* State Engine Setters: { [p: string]: (...args: any) => any | StateEngineSetters }
+* Merging State Engines: Allows for existing State Engines to be merged into a larger State Engine by nesting the Child State Engines under specific keys
+    * While nesting remapping/redefining methods could be useful (ex: a light switch effects 1+ lights, so a Light Switch State Engine could be reworked to run methods from a Light State Engine, allowing for them to be written agnostic of each other until joining)
 
-### `npm start`
+## Future Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Implement internal memoization instead of relying on developer to implement
+    * Getters Generator: Updates based on state needed per getter (open ended)
+    * Setters Generator: The setters don't appear to need to update as setState provides the needed data. Memoization only needed if setter accepts args: (...args: any) => any, otherwise unneeded.
