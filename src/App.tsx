@@ -3,18 +3,30 @@ import logo from './logo.svg';
 import './App.css';
 import { useStateEngine } from './state-engine/stateEngine';
 import { CounterStateEngine } from './examples/counter-state-engine';
+import { ComplexStateEngine } from './examples/complex-state-engine';
 
 function App() {
-  const simpleStateEngine = useStateEngine(CounterStateEngine);
+  const simpleStateEngine = useStateEngine(ComplexStateEngine);
   const {
     getters: {
-      counter: counterGetter
+      counter: counterGetter,
+      stepSize: stepSizeGetter
     },
     setters: {
-      increment,
-      decrement,
-      reset,
-      step
+      counter: {
+        increment: incrementCounter,
+        decrement: decrementCounter,
+        incrementByStepSize,
+        decrementByStepSize,
+        reset: resetCounter,
+        step: stepCounter
+      },
+      stepSize: {
+        increment: incrementStepSize,
+        decrement: decrementStepSize,
+        step: stepStepSize,
+        reset: resetStepSize
+      }
     }
   } = simpleStateEngine;
   const counter = useMemo(() => {
@@ -22,38 +34,81 @@ function App() {
   }, [
     counterGetter
   ]);
+  const stepSize = useMemo(() => {
+    return stepSizeGetter()
+  }, [
+    stepSizeGetter
+  ])
 
   return (
     <div className="App">
+      <p>counter</p>
       <p>{counter}</p>
       <button
-        onClick={() => step(-100)}
+        onClick={() => stepCounter(-100)}
       >
         -100
       </button>
       <button
-        onClick={() => step(-10)}
+        onClick={() => stepCounter(-10)}
       >
         -10
       </button>
       <button
-        onClick={decrement}
+        onClick={decrementCounter}
+      >-1</button>
+      <button
+        onClick={decrementByStepSize}
       >-</button>
       <button
-        onClick={increment}
+        onClick={incrementByStepSize}
       >+</button>
       <button
-        onClick={() => step(+10)}
+        onClick={incrementCounter}
+      >+1</button>
+      <button
+        onClick={() => stepCounter(+10)}
       >
         +10
       </button>
       <button
-        onClick={() => step(100)}
+        onClick={() => stepCounter(100)}
       >
         +100
       </button>
       <button
-        onClick={reset}
+        onClick={resetCounter}
+      >reset</button>
+      <p>step size</p>
+      <p>{stepSize}</p>
+      <button
+        onClick={() => stepStepSize(-100)}
+      >
+        -100
+      </button>
+      <button
+        onClick={() => stepStepSize(-10)}
+      >
+        -10
+      </button>
+      <button
+        onClick={decrementStepSize}
+      >-1</button>
+      <button
+        onClick={incrementStepSize}
+      >+1</button>
+      <button
+        onClick={() => stepStepSize(+10)}
+      >
+        +10
+      </button>
+      <button
+        onClick={() => stepStepSize(100)}
+      >
+        +100
+      </button>
+      <button
+        onClick={resetStepSize}
       >reset</button>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 
 export type StateEngineGetters = {
-    [p: string]: (...args: any) => any;
+    [p: string]: ((...args: any) => any) | StateEngineGetters;
 }
 
 export type StateEngineGettersGenerator<
@@ -12,7 +12,7 @@ export type StateEngineGettersGenerator<
 ) => GETTERS;
 
 export type StateEngineSetters = {
-    [p: string]: (...args: any) => any;
+    [p: string]: ((...args: any) => any) | StateEngineSetters;
 }
 
 export type StateEngineSettersGenerator<
