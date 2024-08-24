@@ -1,14 +1,12 @@
 import { useMemo, useState } from "react";
 import { createStateEngine } from "../state-engine/stateEngine";
 
-export const SimpleStateEngine = createStateEngine({
-    initialState: {
-        counter: 0
-    },
+export const CounterStateEngine = createStateEngine({
+    initialState: 0,
     gettersGenerator: (state) => {
         const finalGetters = useMemo(() => {
             return {
-                counter: () => state.counter
+                counter: () => state
             }
         }, [
             state
@@ -18,14 +16,10 @@ export const SimpleStateEngine = createStateEngine({
     settersGenerator: (setState) => {
         const finalSetters = useMemo(() => {
             return {
-                incrementCounter: () => setState(prevState => ({
-                    ...prevState,
-                    counter: prevState.counter + 1
-                })),
-                decrementCounter: () => setState(prevState => ({
-                    ...prevState,
-                    counter: prevState.counter - 1
-                }))
+                increment: () => setState(prevState => (prevState + 1)),
+                decrement: () => setState(prevState => (prevState - 1)),
+                step: (step: number) => setState(prevState => (prevState + step)),
+                reset: () => setState(0)
             }
         }, [
 

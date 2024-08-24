@@ -2,17 +2,19 @@ import React, { useMemo } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { useStateEngine } from './state-engine/stateEngine';
-import { SimpleStateEngine } from './examples/simple-state-engine';
+import { CounterStateEngine } from './examples/counter-state-engine';
 
 function App() {
-  const simpleStateEngine = useStateEngine(SimpleStateEngine);
+  const simpleStateEngine = useStateEngine(CounterStateEngine);
   const {
     getters: {
       counter: counterGetter
     },
     setters: {
-      incrementCounter,
-      decrementCounter
+      increment,
+      decrement,
+      reset,
+      step
     }
   } = simpleStateEngine;
   const counter = useMemo(() => {
@@ -25,11 +27,34 @@ function App() {
     <div className="App">
       <p>{counter}</p>
       <button
-        onClick={decrementCounter}
+        onClick={() => step(-100)}
+      >
+        -100
+      </button>
+      <button
+        onClick={() => step(-10)}
+      >
+        -10
+      </button>
+      <button
+        onClick={decrement}
       >-</button>
       <button
-        onClick={incrementCounter}
+        onClick={increment}
       >+</button>
+      <button
+        onClick={() => step(+10)}
+      >
+        +10
+      </button>
+      <button
+        onClick={() => step(100)}
+      >
+        +100
+      </button>
+      <button
+        onClick={reset}
+      >reset</button>
     </div>
   );
 }
