@@ -4,13 +4,18 @@ import './App.css';
 import { useStateEngine } from './state-engine/stateEngine';
 import { CounterStateEngine } from './examples/counter-state-engine';
 import { ComplexStateEngine } from './examples/complex-state-engine';
+import { MergedComplexStateEngine } from './examples/merged-complex-state-engine';
 
 function App() {
-  const simpleStateEngine = useStateEngine(ComplexStateEngine);
+  const simpleStateEngine = useStateEngine(MergedComplexStateEngine);
   const {
     getters: {
-      counter: counterGetter,
-      stepSize: stepSizeGetter
+      counter: {
+        counter: counterGetter
+      },
+      stepSize: {
+        stepSize: stepSizeGetter
+      }
     },
     setters: {
       counter: {
